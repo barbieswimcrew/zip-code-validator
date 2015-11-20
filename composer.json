@@ -1,0 +1,20 @@
+{
+    "name": "barbieswimcrew/zip-code-validator",
+    "description": "Constraint class for international zipcode validation",
+    "keywords": ["symfony", "symfony2", "form", "constraints", "constraint", "validator", "zip code", "zipcode", "postal code", "postalcode", "validation"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Schindler"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/validator": ">=2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "ZipCodeValidator\\": "src/ZipCodeValidator"
+        }
+    }
+}
