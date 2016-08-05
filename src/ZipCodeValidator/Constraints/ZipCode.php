@@ -3,6 +3,7 @@
 namespace ZipCodeValidator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Exception\MissingOptionsException;
 
 /**
  * Class ZipCode
@@ -18,29 +19,26 @@ class ZipCode extends Constraint
      */
     public $message = 'This value is not a valid ZIP code.';
 
-    /**
-     * @var mixed|null
-     */
-    private $iso;
+    public $iso;
 
     /**
      * ZipCode constructor.
-     * @param string $iso
      * @param null $options
      */
-    public function __construct($iso, $options = null)
+    public function __construct($options = null)
     {
+
+        if (null !== $options && !is_array($options)) {
+            $options = array(
+                'iso' => $options
+            );
+        }
+
         parent::__construct($options);
-        $this->iso = $iso;
+
+        if (null === $this->iso) {
+            throw new MissingOptionsException(sprintf('The option "iso" must be given for constraint %s', __CLASS__), array('iso'));
+        }
     }
 
-    /**
-     * Getter for iso property
-     * @author Martin Schindler
-     * @return mixed|null
-     */
-    public function getIso()
-    {
-        return $this->iso;
-    }
 }

@@ -211,13 +211,18 @@ class ZipCodeValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($zipcode, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
-        $pattern = $this->patterns[$constraint->getIso()];
-        if (!preg_match("/^{$pattern}$/", $zipcode, $matches)) {
+
+        if (null === $value) {
+            return;
+        }
+
+        $pattern = $this->patterns[$constraint->iso];
+        if (!preg_match("/^{$pattern}$/", $value, $matches)) {
             // If you're using the new 2.5 validation API (you probably are!)
             $this->context->buildViolation($constraint->message)
-                ->setParameter('%string%', $zipcode)
+                ->setParameter('%string%', $value)
                 ->addViolation();
         }
     }
