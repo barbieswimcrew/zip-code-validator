@@ -3,6 +3,8 @@ namespace ZipCodeValidator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
  * Class ZipCodeValidator
@@ -213,12 +215,37 @@ class ZipCodeValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        if (!$constraint instanceof ZipCode) {
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ZipCode');
+        }
 
         if (null === $value) {
             return;
         }
 
-        $pattern = $this->patterns[$constraint->iso];
+        if (!($iso = $constraint->iso)) {
+            // if iso code is not specified, try to fetch it via getter from the object, which is currently validated
+            $object = $this->context->getObject();
+            $getter = $constraint->getter;
+
+            if (!is_callable(array($object, $getter))) {
+                $message = 'Method "%s" used as iso code getter does not exist in class %s';
+                throw new ConstraintDefinitionException(sprintf($message, $getter, get_class($object)));
+            }
+
+            $iso = $object->$getter();
+        }
+
+        // check whether pattern for iso code is specified
+        if (!isset($this->patterns[$iso])) {
+            if ($constraint->strict) {
+                throw new ConstraintDefinitionException(sprintf('Invalid iso code "%s" for validation', $iso));
+            } else {
+                return;
+            }
+        }
+
+        $pattern = $this->patterns[$iso];
         if (!preg_match("/^{$pattern}$/", $value, $matches)) {
             // If you're using the new 2.5 validation API (you probably are!)
             $this->context->buildViolation($constraint->message)
