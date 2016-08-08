@@ -114,7 +114,7 @@ class ZipCodeValidator extends ConstraintValidator
         'KE' => '\\d{5}',
         'KG' => '\\d{6}',
         'KH' => '\\d{5}',
-        'KR' => '\\d{3}[\\-]\\d{3}',
+        'KR' => '\\d{3}(?:\\d{2}|-\\d{3})',
         'KW' => '\\d{5}',
         'KY' => 'KY\\d-\\d{4}',
         'KZ' => '\\d{6}',
