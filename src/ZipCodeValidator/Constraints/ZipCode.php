@@ -19,15 +19,27 @@ class ZipCode extends Constraint
      */
     public $message = 'This value is not a valid ZIP code.';
 
+    /**
+     * @var string
+     */
     public $iso;
 
     /**
+     * @var string
+     */
+    public $getter;
+
+    /**
+     * @var bool
+     */
+    public $strict = true;
+
+    /**
      * ZipCode constructor.
-     * @param null $options
+     * @param mixed $options
      */
     public function __construct($options = null)
     {
-
         if (null !== $options && !is_array($options)) {
             $options = array(
                 'iso' => $options
@@ -36,8 +48,8 @@ class ZipCode extends Constraint
 
         parent::__construct($options);
 
-        if (null === $this->iso) {
-            throw new MissingOptionsException(sprintf('The option "iso" must be given for constraint %s', __CLASS__), array('iso'));
+        if (null === $this->iso && null === $this->getter) {
+            throw new MissingOptionsException(sprintf('Either the option "iso" or "getter" must be given for constraint %s', __CLASS__), array('iso', 'getter'));
         }
     }
 

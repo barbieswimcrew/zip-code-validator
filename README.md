@@ -34,16 +34,56 @@ Another way would be to use the constraint as an annotation of a class property,
 ```bash
 <?php
 
+use ZipCodeValidator\Constraints\ZipCode;
+
 class Address
 {
     /**
-     * @ZipCodeValidator\Constraints\ZipCode(iso="DE")
+     * @ZipCode(iso="DE")
      */
     protected $zipCode;
 }
 ```
 
 >  Please consider to inject a valid ISO 3166 2-letter country code (e.g. DE, US, FR)!
+
+### Use a getter to inject the country code dynamically
+
+If you have a form, in which the user can select a country, you may want to validate the zip code dynamically.
+In this case you can use the `getter` option instead:
+
+```php
+<?php
+
+use ZipCodeValidator\Constraints\ZipCode;
+
+class Address
+{
+    /**
+     * @ZipCode(getter="getCountry")
+     */
+    protected $zipCode;
+
+    protected $country;
+
+    public function getCountry()
+    {
+        return $this->country;
+    }
+}
+```
+
+To disable that the validator throws an exception, when the zip code pattern is not available for a country,
+you can set the `strict` option to `FALSE`.
+
+```php
+    /**
+     * @ZipCode(getter="getCountry", strict=false)
+     */
+    protected $zipCode;
+}
+```
+
 
 ## Copying / License
 This repository is distributed under the MIT License (MIT). You can find the whole license text in the LICENSE file.
