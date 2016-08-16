@@ -8,7 +8,6 @@
             "name": "Martin Schindler"
         }
     ],
-    "version": "1.0.3",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
