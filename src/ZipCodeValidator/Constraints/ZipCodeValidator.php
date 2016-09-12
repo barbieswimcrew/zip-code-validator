@@ -223,7 +223,11 @@ class ZipCodeValidator extends ConstraintValidator
             return;
         }
 
-        if (!($iso = $constraint->iso)) {
+        if(empty($constraint->iso)){
+            return;
+        }
+
+        if (!($iso = strtoupper($constraint->iso))) {
             // if iso code is not specified, try to fetch it via getter from the object, which is currently validated
             $object = $this->context->getObject();
             $getter = $constraint->getter;
@@ -234,6 +238,10 @@ class ZipCodeValidator extends ConstraintValidator
             }
 
             $iso = $object->$getter();
+        }
+
+        if(empty($iso)){
+            return;
         }
 
         // check whether pattern for iso code is specified
