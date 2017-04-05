@@ -151,7 +151,7 @@ class ZipCodeValidator extends ConstraintValidator
         'NF' => '2899',
         'NG' => '\\d{6}',
         'NI' => '\\d{5}',
-        'NL' => '[1-9]{1}\\d{3}([A-Z]{2})?',    // Changed: ZipCode cannot start with 0, fixed optional letters
+        'NL' => '[1-9]{1}\\d{3}([ ]?[A-Z]{2})?',    // Changed: ZipCode cannot start with 0, fixed optional letters
         'NO' => '\\d{4}',
         'NP' => '\\d{5}',
         'NZ' => '\\d{4}',
