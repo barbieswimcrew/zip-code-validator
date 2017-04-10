@@ -1,5 +1,8 @@
 # Constraint Class for international Zipcode Validation
 
+[![Downloads](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_dt.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
+[![Latest Stable Version](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_v.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
+
 ##Installation
 This package uses Composer, please checkout the [composer website](https://getcomposer.org) for more information.
 
