@@ -35,6 +35,11 @@ class ZipCode extends Constraint
     public $strict = true;
 
     /**
+     * @var bool
+     */
+    public $ignoreEmpty = false;
+
+    /**
      * ZipCode constructor.
      * @param mixed $options
      */

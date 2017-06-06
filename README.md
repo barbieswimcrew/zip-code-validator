@@ -3,7 +3,7 @@
 [![Downloads](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_dt.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
 [![Latest Stable Version](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_v.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
 
-##Installation
+## Installation
 This package uses Composer, please checkout the [composer website](https://getcomposer.org) for more information.
 
 The following command will install `zip-code-validator` into your project. It will also add a new entry in your `composer.json` and update the `composer.lock` as well.
@@ -14,7 +14,7 @@ $ composer require barbieswimcrew/zip-code-validator
 
 > This package follows the PSR-4 convention names for its classes, which means you can easily integrate `zip-code-validator` classes loading in your own autoloader.
 
-##What now?
+## What now?
 For validating a zip code you need to instantiate a new ZipCode class provided by this package to set it as a constraint to your form field, for example:
 
 ```bash
@@ -82,6 +82,17 @@ you can set the `strict` option to `FALSE`.
 ```php
     /**
      * @ZipCode(getter="getCountry", strict=false)
+     */
+    protected $zipCode;
+}
+```
+
+To avoid that the validation fails in case that there's an empty value in the zip code field
+you can set the `ignoreEmpty` option to `TRUE`.
+
+```php
+    /**
+     * @ZipCode(getter="getCountry", ignoreEmpty=true)
      */
     protected $zipCode;
 }
