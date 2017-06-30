@@ -94,6 +94,7 @@ class ZipCodeValidator extends ConstraintValidator
         'GT' => '\\d{5}',
         'GU' => '(969(?:[12]\\d|3[12]))(?:[ \\-](\\d{4}))?',
         'GW' => '\\d{4}',
+        'HK' => '999077', //Hong Kong
         'HM' => '\\d{4}',
         'HN' => '\\d{5}',
         'HR' => '\\d{5}',
@@ -138,6 +139,7 @@ class ZipCodeValidator extends ConstraintValidator
         'MK' => '\\d{4}',
         'MM' => '\\d{5}',
         'MN' => '\\d{5}',
+        'MO' => '999078', //Macau
         'MP' => '(9695[012])(?:[ \\-](\\d{4}))?',
         'MQ' => '9[78]2\\d{2}',
         'MT' => '[A-Z]{3} ?\\d{2,4}',
