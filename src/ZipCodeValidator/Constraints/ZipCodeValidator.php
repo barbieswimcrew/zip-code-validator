@@ -101,7 +101,7 @@ class ZipCodeValidator extends ConstraintValidator
         'HT' => '\\d{4}',
         'HU' => '\\d{4}',
         'ID' => '\\d{5}',
-        'IE' => '[\\dA-Z]{3} ?[\\dA-Z]{4}',
+        'IE' => '[\\dA-Z]{3}( ?[\\dA-Z]{4})?',
         'IL' => '\\d{5}(?:\\d{2})?',
         'IM' => 'IM\\d[\\dA-Z]? ?\\d[ABD-HJLN-UW-Z]{2}',
         'IN' => '\\d{6}',
