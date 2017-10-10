@@ -106,7 +106,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
      * Note: \BadMethodCallException is due to context being mocked. When it gets the exception, it will have processed
      * through the validate method and into the no pattern matching block.
      *
-     * @see it_will_not_validate_an_invalid_zip_code
+     * @see it_wont_validate_an_invalid_zip_code
      *
      * @test
      * @expectedException \BadMethodCallException
