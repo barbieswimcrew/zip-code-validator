@@ -56,8 +56,6 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject('VN'));
 
-        $this->validator->initialize($this->context);
-
         $this->validator->validate(123456, new TestZipCodeConstraint);
     }
 
@@ -134,8 +132,6 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject(null));
 
-        $this->validator->initialize($this->context);
-
         $this->validator->validate('dummy', new TestZipCodeConstraint);
     }
 
@@ -147,8 +143,6 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject('non-existing iso'));
-
-        $this->validator->initialize($this->context);
 
         $this->validator->validate('dummy', new TestZipCodeConstraint);
     }
