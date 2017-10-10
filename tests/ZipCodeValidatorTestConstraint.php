@@ -27,7 +27,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_validate_a_zip_code_with_iso()
+    public function it_validates_a_zip_code_with_iso()
     {
         $constraint = new ZipCode('HK');
 
@@ -51,7 +51,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_validate_a_zip_code_with_getter()
+    public function it_validates_a_zip_code_with_getter()
     {
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject('VN'));
@@ -62,7 +62,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_not_validate_an_invalid_zip_code()
+    public function it_wont_validate_an_invalid_zip_code()
     {
         $value = 'invalid';
         $constraint = new ZipCode('HK');
@@ -94,7 +94,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
      */
-    public function it_will_throw_an_exception_on_invalid_constraint_class()
+    public function it_throws_an_exception_on_invalid_constraint_subclass()
     {
         /** @var \Symfony\Component\Validator\Constraint $constraint */
         $constraint = m::mock('\Symfony\Component\Validator\Constraint');
@@ -111,7 +111,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException \BadMethodCallException
      */
-    public function it_will_throw_an_exception_on_empty_value()
+    public function it_throws_an_exception_on_empty_value()
     {
         $constraint = new ZipCode('HK');
         $constraint->ignoreEmpty = false;
@@ -120,7 +120,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_do_nothing_on_empty_value_if_ignore_empty_is_set()
+    public function it_does_nothing_on_empty_value_if_ignore_empty_is_true()
     {
         $constraint = new ZipCode('HK');
         $constraint->ignoreEmpty = true;
@@ -129,7 +129,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_return_blank_on_empty_iso()
+    public function it_returns_blank_on_empty_iso()
     {
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject(null));
@@ -143,7 +143,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
      */
-    public function it_will_throw_an_exception_on_invalid_iso_if_strict_mode_is_set()
+    public function it_throws_an_exception_on_invalid_iso_if_strict_mode_is_true()
     {
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject('non-existing iso'));
