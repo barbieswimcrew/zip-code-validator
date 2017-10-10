@@ -156,18 +156,28 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
 
 class TestZipCodeConstraint extends ZipCode
 {
+    /** @var string */
     public $getter = 'myValidationMethod';
 }
 
 class TestObject
 {
+    /** @var string */
     protected $iso;
 
+    /**
+     * TestObject constructor.
+     *
+     * @param string $iso
+     */
     public function __construct($iso)
     {
         $this->iso = $iso;
     }
 
+    /**
+     * @return string
+     */
     public function myValidationMethod()
     {
         return $this->iso;
