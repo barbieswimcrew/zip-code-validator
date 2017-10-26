@@ -1,5 +1,6 @@
 # Constraint Class for international Zipcode Validation
 
+[![Build Status](https://travis-ci.org/barbieswimcrew/zip-code-validator.svg?branch=master)](https://travis-ci.org/barbieswimcrew/zip-code-validator)
 [![Downloads](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_dt.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
 [![Latest Stable Version](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_v.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
