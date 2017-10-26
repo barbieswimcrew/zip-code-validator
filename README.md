@@ -2,6 +2,7 @@
 
 [![Downloads](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_dt.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
 [![Latest Stable Version](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_v.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 ## Installation
 This package uses Composer, please checkout the [composer website](https://getcomposer.org) for more information.
@@ -100,4 +101,4 @@ you can set the `ignoreEmpty` option to `TRUE`.
 
 
 ## Copying / License
-This repository is distributed under the MIT License (MIT). You can find the whole license text in the LICENSE file.
+This repository is distributed under the MIT License (MIT). You can find the whole license text in the [LICENSE](LICENSE) file.
