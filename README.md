@@ -1,9 +1,11 @@
 # Constraint Class for international Zipcode Validation
 
-[![Build Status](https://travis-ci.org/barbieswimcrew/zip-code-validator.svg?branch=master)](https://travis-ci.org/barbieswimcrew/zip-code-validator)
-[![Downloads](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_dt.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
-[![Latest Stable Version](https://src.run/shield/barbieswimcrew/zip-code-validator/packagist_v.svg)](https://src.run/service/barbieswimcrew/zip-code-validator/packagist)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Build Status](https://img.shields.io/travis/barbieswimcrew/zip-code-validator/master.svg?style=flat-square)](https://travis-ci.org/barbieswimcrew/zip-code-validator)
+[![Downloads](https://img.shields.io/packagist/dt/barbieswimcrew/zip-code-validator.svg?style=flat-square)](https://packagist.org/packages/barbieswimcrew/zip-code-validator)
+[![Latest stable version](https://img.shields.io/packagist/v/barbieswimcrew/zip-code-validator.svg?style=flat-square)](https://packagist.org/packages/barbieswimcrew/zip-code-validator)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/barbieswimcrew/zip-code-validator.svg?style=flat-square)](./composer.json)
+[![GitHub stars](https://img.shields.io/github/stars/barbieswimcrew/zip-code-validator.svg?style=flat-square&label=Stars&style=flat-square)](https://github.com/barbieswimcrew/zip-code-validator/stargazers)
+[![MIT licensed](https://img.shields.io/github/license/barbieswimcrew/zip-code-validator.svg?style=flat-square)](https://github.com/barbieswimcrew/zip-code-validator/blob/master/LICENSE)
 
 ## Installation
 This package uses Composer, please checkout the [composer website](https://getcomposer.org) for more information.
