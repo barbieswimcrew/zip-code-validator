@@ -128,7 +128,7 @@ class ZipCodeValidator extends ConstraintValidator
         'LS' => '\\d{3}',
         'LT' => '\\d{5}',
         'LU' => '\\d{4}',
-        'LV' => 'LV-\\d{4}',
+        'LV' => '(LV-)?\\d{4}',
         'MA' => '\\d{5}',
         'MC' => '980\\d{2}',
         'MD' => '\\d{4}',
