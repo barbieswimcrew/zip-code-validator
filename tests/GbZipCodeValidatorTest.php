@@ -46,6 +46,28 @@ class GbZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_validates_a_gb_zip_code_with_iso_and_small_caps()
+    {
+	    $constraint = new ZipCode([
+                'iso'                => 'GB', 
+                'caseSensitiveCheck' => false
+	    ]);
+
+        // Test some variations
+        $this->validator->validate('ec1a 1bb', $constraint);
+        $this->validator->validate('w1a 0ax', $constraint);
+        $this->validator->validate('m1 1ae', $constraint);
+        $this->validator->validate('b33 8th', $constraint);
+        $this->validator->validate('cr2 6xh', $constraint);
+        $this->validator->validate('dn55 1pt', $constraint);
+        $this->validator->validate('bfpo 801', $constraint);
+        $this->validator->validate('gir 0aa', $constraint);
+        $this->validator->validate('ph1 5rb', $constraint);
+        $this->validator->validate('co4 3sq', $constraint);
+        $this->validator->validate('co4 3sq', $constraint);
+    }
+
+    /** @test */
     public function it_wont_validate_an_invalid_gb_zip_code()
     {
         $value = 'invalid';

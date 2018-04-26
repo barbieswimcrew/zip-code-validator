@@ -253,7 +253,8 @@ class ZipCodeValidator extends ConstraintValidator
         }
 
         $pattern = $this->patterns[$iso];
-        if (!preg_match("/^{$pattern}$/", $value, $matches)) {
+        $caseSensitive = ($constraint->caseSensitiveCheck) ? '' : 'i';
+        if (!preg_match("/^{$pattern}$/" . $caseSensitive, $value, $matches)) {
             // If you're using the new 2.5 validation API (you probably are!)
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%string%', $value)
