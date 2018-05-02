@@ -102,6 +102,16 @@ you can set the `ignoreEmpty` option to `TRUE`.
 }
 ```
 
+### Case insensitive zip code matching
+In case you want to match the zip code in a case insensitive way you have to pass a `caseSensitiveCheck` parameter with `false` value via the constructor:
+```php
+	    $constraint = new ZipCode([
+                'iso'                => 'GB', 
+                'caseSensitiveCheck' => false
+	    ]);
+}
+```
+By the default the library is using case sensitive zip code matching.
 
 ## Copying / License
 This repository is distributed under the MIT License (MIT). You can find the whole license text in the [LICENSE](LICENSE) file.
