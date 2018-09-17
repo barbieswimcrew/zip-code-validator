@@ -232,11 +232,14 @@ class ZipCodeValidator extends ConstraintValidator
             // if iso code is not specified, try to fetch it via getter from the object, which is currently validated
 
             if ($constraint->getter || $constraint->isoPropertyPath) {
-                $object = $this->context->getRoot();
+                $object = $this->context->getObject();
 
-                if ($object instanceof FormInterface) {
-                    $object = $object->getData();
+                // try to get object from form data
+                if ($object === null && $this->context->getRoot() instanceof FormInterface) {
+                    $form = $this->context->getRoot();
+                    $object = $form->getData();
                 }
+
                 if ($constraint->getter) {
                     $getter = $constraint->getter;
                     if (!is_callable(array($object, $getter))) {
