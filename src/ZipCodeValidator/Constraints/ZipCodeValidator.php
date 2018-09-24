@@ -235,7 +235,7 @@ class ZipCodeValidator extends ConstraintValidator
                 $object = $this->context->getObject();
 
                 // try to get object from form data
-                if ($object === null && $this->context->getRoot() instanceof FormInterface) {
+                if ($object === null || $this->context->getRoot() instanceof FormInterface) {
                     $form = $this->context->getRoot();
                     $object = $form->getData();
                 }
