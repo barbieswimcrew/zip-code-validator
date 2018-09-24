@@ -102,6 +102,24 @@ you can set the `ignoreEmpty` option to `TRUE`.
 }
 ```
 
+### Use a property path to inject the country code dynamically
+
+When working with form data as array or you have more complex objects in your form data the `getter` option does not work. You can instead use the `isoPropertyPath` option. If you're not inside the Symfony fullstack framework, you need to install the [Symfony PropertyAccess component](https://symfony.com/doc/current/components/property_access.html) first.
+
+```php
+$address = [
+    'country' => 'DE',
+];
+
+$builder = $this->createFormBuilder($address);
+$builder->add('country', TextType::class);
+$builder->add('zipcode', TextType::class, [
+    'constraints' => [
+         new ZipCode(['isoPropertyPath' => '[country]'])
+    ]
+]);
+```
+
 ### Case insensitive zip code matching
 In case you want to match the zip code in a case insensitive way you have to pass a `caseSensitiveCheck` parameter with `false` value via the constructor:
 ```php
