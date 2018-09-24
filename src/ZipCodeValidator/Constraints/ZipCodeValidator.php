@@ -1,8 +1,6 @@
 <?php
 namespace ZipCodeValidator\Constraints;
 
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
@@ -230,36 +228,18 @@ class ZipCodeValidator extends ConstraintValidator
 
         if (!($iso = strtoupper($constraint->iso))) {
             // if iso code is not specified, try to fetch it via getter from the object, which is currently validated
+            $object = $this->context->getObject();
+            $getter = $constraint->getter;
 
-            if ($constraint->getter || $constraint->isoPropertyPath) {
-                $object = $this->context->getObject();
-
-                // try to get object from form data
-                if ($this->context->getRoot() instanceof FormInterface) {
-                    $form = $this->context->getRoot();
-                    $object = $form->getData();
-                }
-
-                if ($constraint->getter) {
-                    $getter = $constraint->getter;
-                    if (!is_callable(array($object, $getter))) {
-                        $message = 'Method "%s" used as iso code getter does not exist in class %s';
-                        throw new ConstraintDefinitionException(sprintf($message, $getter, get_class($object)));
-                    }
-                    $iso = $object->$getter();
-                }
-                if ($constraint->isoPropertyPath) {
-                    if (!class_exists(PropertyAccess::class)) {
-                        throw new \RuntimeException('The symfony/property-access component is required for "isoPropertyPath" option');
-                    }
-
-                    $propertyAccessor = PropertyAccess::createPropertyAccessor();
-                    $iso = $propertyAccessor->getValue($object, $constraint->isoPropertyPath);
-                }
+            if (!is_callable(array($object, $getter))) {
+                $message = 'Method "%s" used as iso code getter does not exist in class %s';
+                throw new ConstraintDefinitionException(sprintf($message, $getter, get_class($object)));
             }
+
+            $iso = $object->$getter();
         }
 
-        if (empty($iso)){
+        if(empty($iso)){
             return;
         }
 
