@@ -56,7 +56,66 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject('VN'));
 
-        $this->validator->validate(123456, new TestZipCodeConstraint);
+        $this->context->shouldReceive('getRoot')
+            ->andReturnNull();
+
+        $this->validator->validate(123456, new TestZipCodeGetterConstraint);
+    }
+
+    /** @test */
+    public function it_validates_a_zip_code_with_getter_from_form_data()
+    {
+        $this->context->shouldReceive('getObject')->once()
+            ->andReturnNull();
+
+        $form = m::mock('\Symfony\Component\Form\Form');
+        $form->shouldReceive('getData')->once()
+            ->andReturn(new TestObject('VN'));
+
+        $this->context->shouldReceive('getRoot')
+            ->andReturn($form);
+
+        $this->validator->validate(123456, new TestZipCodeGetterConstraint);
+    }
+
+    /** @test */
+    public function it_validates_a_zip_code_with_property_path()
+    {
+        $this->context->shouldReceive('getObject')->once()
+            ->andReturn(new TestObject('VN'));
+
+        $this->context->shouldReceive('getRoot')
+            ->andReturnNull();
+
+        $this->validator->validate(123456, new ZipCode(['isoPropertyPath' => 'iso']));
+    }
+
+    /** @test */
+    public function it_validates_a_zip_code_with_array_property_path()
+    {
+        $this->context->shouldReceive('getObject')->once()
+            ->andReturn(['iso' => 'VN']);
+
+        $this->context->shouldReceive('getRoot')
+            ->andReturnNull();
+
+        $this->validator->validate(123456, new ZipCode(['isoPropertyPath' => '[iso]']));
+    }
+
+    /** @test */
+    public function it_validates_a_zip_code_with_property_path_from_form_data()
+    {
+        $this->context->shouldReceive('getObject')->once()
+            ->andReturnNull();
+
+        $form = m::mock('\Symfony\Component\Form\Form');
+        $form->shouldReceive('getData')->once()
+            ->andReturn(new TestObject('VN'));
+
+        $this->context->shouldReceive('getRoot')
+            ->andReturn($form);
+
+        $this->validator->validate(123456, new ZipCode(['isoPropertyPath' => 'iso']));
     }
 
     /** @test */
@@ -132,7 +191,10 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject(null));
 
-        $this->validator->validate('dummy', new TestZipCodeConstraint);
+        $this->context->shouldReceive('getRoot')
+            ->andReturnNull();
+
+        $this->validator->validate('dummy', new TestZipCodeGetterConstraint);
     }
 
     /**
@@ -144,14 +206,17 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
         $this->context->shouldReceive('getObject')->once()
             ->andReturn(new TestObject('non-existing iso'));
 
-        $this->validator->validate('dummy', new TestZipCodeConstraint);
+        $this->context->shouldReceive('getRoot')
+            ->andReturnNull();
+
+        $this->validator->validate('dummy', new TestZipCodeGetterConstraint);
     }
 }
 
-class TestZipCodeConstraint extends ZipCode
+class TestZipCodeGetterConstraint extends ZipCode
 {
     /** @var string */
-    public $getter = 'myValidationMethod';
+    public $getter = 'getIso';
 }
 
 class TestObject
@@ -172,7 +237,7 @@ class TestObject
     /**
      * @return string
      */
-    public function myValidationMethod()
+    public function getIso()
     {
         return $this->iso;
     }

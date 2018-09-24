@@ -30,6 +30,11 @@ class ZipCode extends Constraint
     public $getter;
 
     /**
+     * @var string
+     */
+    public $isoPropertyPath;
+
+    /**
      * @var bool
      */
     public $strict = true;
@@ -58,8 +63,8 @@ class ZipCode extends Constraint
 
         parent::__construct($options);
 
-        if (null === $this->iso && null === $this->getter) {
-            throw new MissingOptionsException(sprintf('Either the option "iso" or "getter" must be given for constraint %s', __CLASS__), array('iso', 'getter'));
+        if (null === $this->iso && null === $this->getter && null === $this->isoPropertyPath) {
+            throw new MissingOptionsException(sprintf('Either the option "iso", "getter" or "isoPropertyPath" must be given for constraint %s', __CLASS__), array('iso', 'getter', 'isoPropertyPath'));
         }
     }
 
