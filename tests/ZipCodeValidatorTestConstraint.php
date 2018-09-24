@@ -115,7 +115,7 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
         $this->context->shouldReceive('getRoot')
             ->andReturn($form);
 
-        $this->validator->validate(123456, new ZipCode(['isoPropertyPath' => '[iso]']));
+        $this->validator->validate(123456, new ZipCode(['isoPropertyPath' => 'iso']));
     }
 
     /** @test */
