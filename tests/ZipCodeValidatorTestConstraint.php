@@ -4,7 +4,7 @@ use Mockery as m;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
+class GbZipCodeValidatorTest extends PHPUnit_Framework_TestCase
 {
     /** @var ZipCodeValidator */
     protected $validator;
@@ -27,43 +27,51 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_validates_a_zip_code_with_iso()
+    public function it_validates_a_gb_zip_code_with_iso()
     {
-        $constraint = new ZipCode('HK');
+        $constraint = new ZipCode('GB');
 
-        // Test some integers
-        $this->validator->validate(999077, $constraint);
-
-        $constraint->iso = 'KE';
-        $this->validator->validate(12345, $constraint);
-
-        // Test some strings
-        $constraint->iso = 'MU';
-        $this->validator->validate('15325', $constraint);
-        $this->validator->validate('153BU123', $constraint);
-
-        $constraint->iso = 'NL';
-        $this->validator->validate('1234AB', $constraint);
-        $this->validator->validate('1234 AB', $constraint);
-
-        $constraint->iso = 'PN';
-        $this->validator->validate('PCRN 1ZZ', $constraint);
+        // Test some variations
+        $this->validator->validate('EC1A 1BB', $constraint);
+        $this->validator->validate('W1A 0AX', $constraint);
+        $this->validator->validate('M1 1AE', $constraint);
+        $this->validator->validate('B33 8TH', $constraint);
+        $this->validator->validate('CR2 6XH', $constraint);
+        $this->validator->validate('DN55 1PT', $constraint);
+        $this->validator->validate('BFPO 801', $constraint);
+        $this->validator->validate('GIR 0AA', $constraint);
+        $this->validator->validate('PH1 5RB', $constraint);
+        $this->validator->validate('CO4 3SQ', $constraint);
+        $this->validator->validate('CO4 3SQ', $constraint);
     }
 
     /** @test */
-    public function it_validates_a_zip_code_with_getter()
+    public function it_validates_a_gb_zip_code_with_iso_and_small_caps()
     {
-        $this->context->shouldReceive('getObject')->once()
-            ->andReturn(new TestObject('VN'));
+	    $constraint = new ZipCode([
+                'iso'                => 'GB', 
+                'caseSensitiveCheck' => false
+	    ]);
 
-        $this->validator->validate(123456, new TestZipCodeConstraint);
+        // Test some variations
+        $this->validator->validate('ec1a 1bb', $constraint);
+        $this->validator->validate('w1a 0ax', $constraint);
+        $this->validator->validate('m1 1ae', $constraint);
+        $this->validator->validate('b33 8th', $constraint);
+        $this->validator->validate('cr2 6xh', $constraint);
+        $this->validator->validate('dn55 1pt', $constraint);
+        $this->validator->validate('bfpo 801', $constraint);
+        $this->validator->validate('gir 0aa', $constraint);
+        $this->validator->validate('ph1 5rb', $constraint);
+        $this->validator->validate('co4 3sq', $constraint);
+        $this->validator->validate('co4 3sq', $constraint);
     }
 
     /** @test */
-    public function it_wont_validate_an_invalid_zip_code()
+    public function it_wont_validate_an_invalid_gb_zip_code()
     {
         $value = 'invalid';
-        $constraint = new ZipCode('HK');
+        $constraint = new ZipCode('GB');
 
         // Non-mocked context object due to sheer complexity. Might need a refactor
         $translator = new \Symfony\Component\Translation\Translator('en-US');
@@ -88,73 +96,72 @@ class ZipCodeValidatorTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @test
-     * @expectedException \Symfony\Component\Validator\Exception\UnexpectedTypeException
-     */
-    public function it_throws_an_exception_on_invalid_constraint_subclass()
+    /** @test */
+    public function it_wont_validate_an_valid_gb_zip_code_with_extra_leading_chars()
     {
-        /** @var \Symfony\Component\Validator\Constraint $constraint */
-        $constraint = m::mock('\Symfony\Component\Validator\Constraint');
+        $value = 'XEC1A 1BB';
+        $constraint = new ZipCode('GB');
 
-        $this->validator->validate('dummy', $constraint);
-    }
+        // Non-mocked context object due to sheer complexity. Might need a refactor
+        $translator = new \Symfony\Component\Translation\Translator('en-US');
+        $context = new \Symfony\Component\Validator\Context\ExecutionContext(
+            new \Symfony\Component\Validator\Validator\RecursiveValidator(
+                new \Symfony\Component\Validator\Context\ExecutionContextFactory($translator),
+                new \Symfony\Component\Validator\Tests\Fixtures\FakeMetadataFactory(),
+                new \Symfony\Component\Validator\ConstraintValidatorFactory()
+            ),
+            null,
+            $translator
+        );
 
-    /**
-     * Note: \BadMethodCallException is due to context being mocked. When it gets the exception, it will have processed
-     * through the validate method and into the no pattern matching block.
-     *
-     * @see it_wont_validate_an_invalid_zip_code
-     *
-     * @test
-     * @expectedException \BadMethodCallException
-     */
-    public function it_throws_an_exception_on_empty_value()
-    {
-        $constraint = new ZipCode('HK');
-        $constraint->ignoreEmpty = false;
+        $context->setConstraint($constraint);
+        $this->validator->initialize($context);
 
-        $this->validator->validate('', $constraint);
+        $this->validator->validate($value, $constraint);
+
+        $this->assertEquals(
+            $constraint->message,
+            $context->getViolations()->get(0)->getMessage()
+        );
     }
 
     /** @test */
-    public function it_does_nothing_on_empty_value_if_ignore_empty_is_true()
+    public function it_wont_validate_an_valid_gb_zip_code_with_extra_trainling_chars()
     {
-        $constraint = new ZipCode('HK');
-        $constraint->ignoreEmpty = true;
+        $value = 'EC1A 1BBX';
+        $constraint = new ZipCode('GB');
 
-        $this->validator->validate('', $constraint);
-    }
+        // Non-mocked context object due to sheer complexity. Might need a refactor
+        $translator = new \Symfony\Component\Translation\Translator('en-US');
+        $context = new \Symfony\Component\Validator\Context\ExecutionContext(
+            new \Symfony\Component\Validator\Validator\RecursiveValidator(
+                new \Symfony\Component\Validator\Context\ExecutionContextFactory($translator),
+                new \Symfony\Component\Validator\Tests\Fixtures\FakeMetadataFactory(),
+                new \Symfony\Component\Validator\ConstraintValidatorFactory()
+            ),
+            null,
+            $translator
+        );
 
-    /** @test */
-    public function it_returns_blank_on_empty_iso()
-    {
-        $this->context->shouldReceive('getObject')->once()
-            ->andReturn(new TestObject(null));
+        $context->setConstraint($constraint);
+        $this->validator->initialize($context);
 
-        $this->validator->validate('dummy', new TestZipCodeConstraint);
-    }
+        $this->validator->validate($value, $constraint);
 
-    /**
-     * @test
-     * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
-     */
-    public function it_throws_an_exception_on_invalid_iso_if_strict_mode_is_true()
-    {
-        $this->context->shouldReceive('getObject')->once()
-            ->andReturn(new TestObject('non-existing iso'));
-
-        $this->validator->validate('dummy', new TestZipCodeConstraint);
+        $this->assertEquals(
+            $constraint->message,
+            $context->getViolations()->get(0)->getMessage()
+        );
     }
 }
 
-class TestZipCodeConstraint extends ZipCode
+class TestGbZipCodeConstraint extends ZipCode
 {
     /** @var string */
     public $getter = 'myValidationMethod';
 }
 
-class TestObject
+class TestGbObject
 {
     /** @var string */
     protected $iso;
