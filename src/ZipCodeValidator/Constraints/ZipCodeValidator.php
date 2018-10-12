@@ -74,7 +74,7 @@ class ZipCodeValidator extends ConstraintValidator
         'EE' => '\\d{5}',
         'EG' => '\\d{5}',
         'EH' => '\\d{5}',
-        'ES' => '\\d{5}',
+        'ES' => '^([0-4]\\d{4}|5[0-2]\\d{3})$',
         'ET' => '\\d{4}',
         'FI' => '\\d{5}',
         'FK' => 'FIQQ 1ZZ',
