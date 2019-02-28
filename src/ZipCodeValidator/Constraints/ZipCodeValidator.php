@@ -158,6 +158,7 @@ class ZipCodeValidator extends ConstraintValidator
         'NP' => '\\d{5}',
         'NZ' => '\\d{4}',
         'OM' => '(?:PC )?\\d{3}',
+        'PA' => '\\d{4}',
         'PE' => '(?:LIMA \\d{1,2}|CALLAO 0?\\d)|[0-2]\\d{4}',
         'PF' => '987\\d{2}',
         'PG' => '\\d{3}',
