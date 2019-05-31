@@ -111,6 +111,7 @@ class ZipCodeValidator extends ConstraintValidator
         'IS' => '\\d{3}',
         'IT' => '\\d{5}',
         'JE' => 'JE\\d[\\dA-Z]? ?\\d[ABD-HJLN-UW-Z]{2}',
+        'JM' => '[\\a-zA-Z]{2}',
         'JO' => '\\d{5}',
         'JP' => '\\d{3}-?\\d{4}',
         'KE' => '\\d{5}',
