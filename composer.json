@@ -1,7 +1,7 @@
 {
     "name": "barbieswimcrew/zip-code-validator",
     "description": "Constraint class for international zipcode validation",
-    "keywords": ["symfony", "symfony3", "symfony2", "form", "constraints", "constraint", "validator", "zip code", "zipcode", "postal code", "postalcode", "validation"],
+    "keywords": ["symfony", "symfony4", "symfony3", "symfony2", "form", "constraints", "constraint", "validator", "zip code", "zipcode", "postal code", "postalcode", "validation"],
     "license": "MIT",
     "authors": [
         {
