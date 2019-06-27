@@ -57,7 +57,7 @@ class ZipCodeValidator extends ConstraintValidator
         'BY' => '\\d{6}',
         'CA' => '[ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJ-NPRSTV-Z] ?\\d[ABCEGHJ-NPRSTV-Z]\\d',
         'CC' => '6799',
-        'CH' => '\\d{4}',
+        'CH' => '[1-9]\\d{3}',
         'CL' => '\\d{7}',
         'CN' => '\\d{6}',
         'CO' => '\\d{6}',
