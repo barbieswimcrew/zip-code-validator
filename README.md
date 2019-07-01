@@ -84,32 +84,30 @@ To disable that the validator throws an exception, when the zip code pattern is 
 you can set the `strict` option to `FALSE`.
 
 ```php
-    /**
-     * @ZipCode(getter="getCountry", strict=false)
-     */
-    protected $zipCode;
-}
+/**
+* @ZipCode(getter="getCountry", strict=false)
+*/
+protected $zipCode;
 ```
 
 To avoid that the validation fails in case that there's an empty value in the zip code field
 you can set the `ignoreEmpty` option to `TRUE`.
 
 ```php
-    /**
-     * @ZipCode(getter="getCountry", ignoreEmpty=true)
-     */
-    protected $zipCode;
-}
+/**
+* @ZipCode(getter="getCountry", ignoreEmpty=true)
+*/
+protected $zipCode;
 ```
 
 ### Case insensitive zip code matching
 In case you want to match the zip code in a case insensitive way you have to pass a `caseSensitiveCheck` parameter with `false` value via the constructor:
 ```php
-	    $constraint = new ZipCode([
-                'iso'                => 'GB', 
-                'caseSensitiveCheck' => false
-	    ]);
-}
+$constraint = new ZipCode([
+    'iso' => 'GB', 
+    'caseSensitiveCheck' => false
+]);
+
 ```
 By the default the library is using case sensitive zip code matching.
 
