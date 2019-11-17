@@ -54,7 +54,7 @@ class Address
 
 >  Please consider to inject a valid ISO 3166 2-letter country code (e.g. DE, US, FR)!
 
->  NOTE: This library validates against known zip code regex patterns and does not validate the existance of a zipcode.
+>  NOTE: This library validates against known zip code regex patterns and does not validate the existence of a zipcode.
 
 ### Use a getter to inject the country code dynamically
 
