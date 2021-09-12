@@ -224,7 +224,7 @@ class ZipCodeValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ZipCode');
         }
 
-        if ($constraint->ignoreEmpty and empty($value)) {
+        if (null === $value || '' === $value) {
             return;
         }
 

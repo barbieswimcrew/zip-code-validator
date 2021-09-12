@@ -88,12 +88,12 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testValidationDoesNothingOnEmptyValueIfIgnoreEmptyIsTrue()
+    public function testValidationIgnoresBlankValues()
     {
         $constraint = new ZipCode('HK');
-        $constraint->ignoreEmpty = true;
 
         $this->validator->validate('', $constraint);
+        $this->validator->validate(null, $constraint);
     }
 
     /** @test */
