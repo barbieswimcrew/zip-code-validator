@@ -37,11 +37,6 @@ class ZipCode extends Constraint
     /**
      * @var bool
      */
-    public $ignoreEmpty = false;
-
-    /**
-     * @var bool
-     */
     public $caseSensitiveCheck = true;
 
     /**

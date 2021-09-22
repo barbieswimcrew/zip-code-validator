@@ -87,18 +87,18 @@ you can set the `strict` option to `FALSE`.
 
 ```php
 /**
-* @ZipCode(getter="getCountry", strict=false)
-*/
+ * @ZipCode(getter="getCountry", strict=false)
+ */
 protected $zipCode;
 ```
 
-To avoid that the validation fails in case that there's an empty value in the zip code field
-you can set the `ignoreEmpty` option to `TRUE`.
+The validator will not validate empty strings and null values. To disallow them use the Symfony stock `NotNull` or `NotBlank` constraint in addition to `ZipCode`.
 
 ```php
 /**
-* @ZipCode(getter="getCountry", ignoreEmpty=true)
-*/
+ * @ZipCode(getter="getCountry")
+ * @NotBlank 
+ */
 protected $zipCode;
 ```
 
