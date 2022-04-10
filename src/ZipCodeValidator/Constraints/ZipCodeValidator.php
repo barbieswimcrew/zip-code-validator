@@ -228,7 +228,7 @@ class ZipCodeValidator extends ConstraintValidator
             return;
         }
 
-        if (!($iso = strtoupper($constraint->iso))) {
+        if (null === $constraint->iso || !($iso = strtoupper($constraint->iso))) {
             // if iso code is not specified, try to fetch it via getter from the object, which is currently validated
             $object = $this->context->getObject();
             $getter = $constraint->getter;
