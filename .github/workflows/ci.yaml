@@ -51,4 +51,4 @@ jobs:
           composer update --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Execute tests
-        run: vendor/bin/phpunit -c ./phpunit.xml.dist --verbose
+        run: vendor/bin/phpunit -c ./phpunit.xml.dist ./tests --verbose
