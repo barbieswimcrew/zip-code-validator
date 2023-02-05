@@ -5,7 +5,6 @@ namespace ZipCodeValidator\Tests\Constraints;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;

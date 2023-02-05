@@ -2,14 +2,18 @@
 
 namespace ZipCodeValidator\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\MissingOptionsException;
 
 /**
  * @Annotation
  * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
+ * TODO NamedArgumentConstructor
  * @author Martin Schindler
  */
+##[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_METHOD)]
+# TODO Needs rewrite of __construct() and tests
 class ZipCode extends Constraint
 {
     public string $message = 'This value is not a valid ZIP code.';

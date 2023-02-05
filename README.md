@@ -1,6 +1,6 @@
 # Constraint Class for international Zipcode Validation
 
-[![Build Status](https://img.shields.io/travis/barbieswimcrew/zip-code-validator/master.svg?style=flat-square)](https://travis-ci.org/barbieswimcrew/zip-code-validator)
+[![Build Status](https://github.com/barbieswimcrew/zip-code-validator/actions/workflows/ci.yaml/badge.svg)](https://github.com/barbieswimcrew/zip-code-validator/actions/workflows/ci.yaml)
 [![Downloads](https://img.shields.io/packagist/dt/barbieswimcrew/zip-code-validator.svg?style=flat-square)](https://packagist.org/packages/barbieswimcrew/zip-code-validator)
 [![Latest stable version](https://img.shields.io/packagist/v/barbieswimcrew/zip-code-validator.svg?style=flat-square)](https://packagist.org/packages/barbieswimcrew/zip-code-validator)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/barbieswimcrew/zip-code-validator.svg?style=flat-square)](./composer.json)
@@ -26,14 +26,14 @@ For validating a zip code you need to instantiate a new ZipCode class provided b
 <?php
 //...
 $form = $this->createFormBuilder($address)
-            ->add('zipcode', TextType::class, array(
+            ->add('zipcode', TextType::class, [
                 'constraints' => array(
-                    new ZipCodeValidator\Constraints\ZipCode(array(
+                    new ZipCodeValidator\Constraints\ZipCode([
                         'iso' => 'DE'
-                    ))
-                )
+                    ])
+                ]
             ))
-            ->add('save', SubmitType::class, array('label' => 'Create Task'))
+            ->add('save', SubmitType::class, ['label' => 'Create Task'])
             ->getForm();
 ```
 
