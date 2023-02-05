@@ -1,8 +1,10 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
-use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
@@ -10,16 +12,11 @@ use ZipCodeValidator\Constraints\ZipCodeValidator;
 /**
  * Class PaZipCodeValidatorTest
  */
-class PaZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class PaZipCodeValidatorTest extends TestCase
 {
+    protected ZipCodeValidator $validator;
 
-    /** @var ZipCodeValidator */
-    protected $validator;
-
-    /**
-     *
-     */
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new ZipCodeValidator;
     }
@@ -28,14 +25,12 @@ class PaZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
      * This test verifies that all known Panama codes are valid.
      *
      * @dataProvider getPanamaZipCodes
-     * @test
-     * @param string $zipCode
      */
-    public function testZipcodes($zipCode)
+    public function testZipcodes(string $zipCode): void
     {
         $constraint = new ZipCode('PA');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -51,10 +46,8 @@ class PaZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * used postal codes
      * from https://en.wikipedia.org/wiki/Postal_codes_in_Panama
-     *
-     * @return array
      */
-    public function getPanamaZipCodes()
+    public function getPanamaZipCodes(): array
     {
         return [
             ['0101'],

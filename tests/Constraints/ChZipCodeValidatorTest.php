@@ -1,30 +1,31 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-class ChZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class ChZipCodeValidatorTest extends TestCase
 {
-    /** @var ZipCodeValidator */
-    protected $validator;
+    protected ZipCodeValidator $validator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new ZipCodeValidator;
     }
 
     /**
      * @dataProvider chValidZipCodes
-     * @param string $zipCode
      */
-    public function testValidationOfChZipCode($zipCode)
+    public function testValidationOfChZipCode(string $zipCode): void
     {
         $constraint = new ZipCode('CH');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -39,10 +40,7 @@ class ChZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($zipCode, $constraint);
     }
 
-    /**
-     * @return array
-     */
-    public function chValidZipCodes()
+    public function chValidZipCodes(): array
     {
         return [
             ['1000'],
@@ -54,9 +52,8 @@ class ChZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider chInvalidZipCodes
-     * @param string $zipcode
      */
-    public function testValidationErrorWithInvalidChZipCode($zipcode)
+    public function testValidationErrorWithInvalidChZipCode(string $zipcode): void
     {
         $constraint = new ZipCode('CH');
 
@@ -65,11 +62,11 @@ class ChZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ->getMock();
         $violationBuilderMock->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $contextMock->expects($this->exactly(1))
+        $contextMock->expects($this->once())
             ->method('buildViolation')
             ->with($constraint->message)
             ->willReturn($violationBuilderMock);
@@ -79,10 +76,7 @@ class ChZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($zipcode, $constraint);
     }
 
-    /**
-     * @return array
-     */
-    public function chInvalidZipCodes()
+    public function chInvalidZipCodes(): array
     {
         return [
             ['0000'],
@@ -92,6 +86,5 @@ class ChZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ['2-341'],
         ];
     }
-
 
 }

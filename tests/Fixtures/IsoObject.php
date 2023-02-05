@@ -1,25 +1,13 @@
 <?php
-namespace Tests\Fixtures;
+namespace ZipCodeValidator\Tests\Fixtures;
 
 class IsoObject
 {
-    /** @var string */
-    protected $iso;
-
-    /**
-     * TestObject constructor.
-     *
-     * @param string $iso
-     */
-    public function __construct($iso)
+    public function __construct(protected string $iso)
     {
-        $this->iso = $iso;
     }
 
-    /**
-     * @return string
-     */
-    public function myValidationMethod()
+    public function myValidationMethod(): string
     {
         return $this->iso;
     }
