@@ -1,26 +1,22 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-
 /**
  * Class JmZipCodeValidatorTest
- *
  */
-class JmZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class JmZipCodeValidatorTest extends TestCase
 {
+    protected ZipCodeValidator $validator;
 
-    /** @var ZipCodeValidator */
-    protected $validator;
-
-    /**
-     *
-     */
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new ZipCodeValidator;
     }
@@ -29,14 +25,12 @@ class JmZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
      * This test verifies that all known Jamaica codes are valid.
      *
      * @dataProvider getValidJamaicaZipCodes
-     * @test
-     * @param string $zipCode
      */
-    public function testValidZipcodes($zipCode)
+    public function testValidZipcodes(string $zipCode): void
     {
         $constraint = new ZipCode('JM');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -52,10 +46,8 @@ class JmZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * used postal codes
      * from https://en.wikipedia.org/wiki/Postal_codes_in_Jamaica
-     *
-     * @return array
      */
-    public function getValidJamaicaZipCodes()
+    public function getValidJamaicaZipCodes(): array
     {
         return [
             ['KN'],
@@ -71,17 +63,15 @@ class JmZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
      * This test verifies that all known Jamaica codes are valid.
      *
      * @dataProvider getInvalidJamaicaZipCodes
-     * @test
-     * @param string $zipCode
      */
-    public function testInvalidZipcodes($zipCode)
+    public function testInvalidZipcodes(string $zipCode): void
     {
         $constraint = new ZipCode('JM');
 
         $violation = $this->createMock(ConstraintViolationBuilderInterface::class);
         $violation->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -97,10 +87,8 @@ class JmZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * used postal codes
      * from https://en.wikipedia.org/wiki/Postal_codes_in_Jamaica
-     *
-     * @return array
      */
-    public function getInvalidJamaicaZipCodes()
+    public function getInvalidJamaicaZipCodes(): array
     {
         return [
             ['12'],

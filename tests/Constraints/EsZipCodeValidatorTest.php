@@ -1,30 +1,31 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-class EsZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class EsZipCodeValidatorTest extends TestCase
 {
-    /** @var ZipCodeValidator */
-    protected $validator;
+    protected ZipCodeValidator $validator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new ZipCodeValidator;
     }
 
     /**
      * @dataProvider esValidZipCodes
-     * @param string $zipCode
      */
-    public function testValidationOfEsZipCode($zipCode)
+    public function testValidationOfEsZipCode(string $zipCode): void
     {
         $constraint = new ZipCode('ES');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -39,10 +40,7 @@ class EsZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($zipCode, $constraint);
     }
 
-    /**
-     * @return array
-     */
-    public function esValidZipCodes()
+    public function esValidZipCodes(): array
     {
         return [
             ['08020'],
@@ -54,9 +52,8 @@ class EsZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider esInvalidZipCodes
-     * @param string $zipcode
      */
-    public function testValidationErrorWithInvalidEsZipCode($zipcode)
+    public function testValidationErrorWithInvalidEsZipCode(string $zipcode): void
     {
         $constraint = new ZipCode('ES');
 
@@ -65,11 +62,11 @@ class EsZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ->getMock();
         $violationBuilderMock->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $contextMock->expects($this->exactly(1))
+        $contextMock->expects($this->once())
             ->method('buildViolation')
             ->with($constraint->message)
             ->willReturn($violationBuilderMock);
@@ -79,10 +76,7 @@ class EsZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($zipcode, $constraint);
     }
 
-    /**
-     * @return array
-     */
-    public function esInvalidZipCodes()
+    public function esInvalidZipCodes(): array
     {
         return [
             ['53456'],
@@ -92,6 +86,4 @@ class EsZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ['2341'],
         ];
     }
-
-
 }

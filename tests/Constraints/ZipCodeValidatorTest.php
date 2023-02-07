@@ -1,21 +1,25 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class ZipCodeValidatorTest extends TestCase
 {
-    /** @var ZipCodeValidator */
-    protected $validator;
+    protected ZipCodeValidator $validator;
 
-    /** @var \Symfony\Component\Validator\Context\ExecutionContextInterface|PHPUnit_Framework_MockObject_MockObject */
+    /** @var ExecutionContextInterface|MockObject */
     protected $contextMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
@@ -24,13 +28,10 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $isoCode
-     * @param string $value
-     *
      * @dataProvider validZipCodes
      * @doesNotPerformAssertions
      */
-    public function testZipCodeValidationWithIso($isoCode, $value)
+    public function testZipCodeValidationWithIso(string|int $isoCode, string|int|null $value): void
     {
         $constraint = new ZipCode($isoCode);
         $this->validator->validate($value, $constraint);
@@ -39,7 +40,7 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider
      */
-    public function validZipCodes()
+    public function validZipCodes(): array
     {
         return [
             ['HK', 999077],
@@ -52,10 +53,9 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /** @test */
-    public function testValidZipCodeValidationWithGetter()
+    public function testValidZipCodeValidationWithGetter(): void
     {
-        /** @var ZipCode|PHPUnit_Framework_MockObject_MockObject $constraintMock */
+        /** @var ZipCode|MockObject $constraintMock */
         $constraintMock = $this->getMockBuilder(ZipCode::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -63,7 +63,7 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $constraintMock->iso = null;
         $constraintMock->getter = 'myValidationMethod';
 
-        $gbObject = new \Tests\Fixtures\IsoObject('VN');
+        $gbObject = new \ZipCodeValidator\Tests\Fixtures\IsoObject('VN');
 
         $this->contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
@@ -77,7 +77,7 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate(123456, $constraintMock);
     }
 
-    public function testUnexpectedTypeException()
+    public function testUnexpectedTypeException(): void
     {
         $constraint = $this->getMockBuilder(Constraint::class)->disableOriginalConstructor()->getMock();
         $this->expectException(UnexpectedTypeException::class);
@@ -88,7 +88,7 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testValidationIgnoresBlankValues()
+    public function testValidationIgnoresBlankValues(): void
     {
         $constraint = new ZipCode('HK');
 
@@ -96,10 +96,9 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate(null, $constraint);
     }
 
-    /** @test */
-    public function testValidationReturnsNothingOnEmptyIso()
+    public function testValidationReturnsNothingOnEmptyIso(): void
     {
-        /** @var ZipCode|PHPUnit_Framework_MockObject_MockObject $constraintMock */
+        /** @var ZipCode|MockObject $constraintMock */
         $constraintMock = $this->getMockBuilder(ZipCode::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -107,9 +106,9 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $constraintMock->iso = '';
         $constraintMock->getter = 'myValidationMethod';
 
-        $isoObject = new \Tests\Fixtures\IsoObject('');
+        $isoObject = new \ZipCodeValidator\Tests\Fixtures\IsoObject('');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $this->contextMock */
+        /** @var ExecutionContext|MockObject $this->contextMock */
         $this->contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -123,7 +122,7 @@ class ZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate('dummy', $constraintMock);
     }
 
-    public function testConstraintDefinitionExceptionWhenInvalidIsoInStrictMode()
+    public function testConstraintDefinitionExceptionWhenInvalidIsoInStrictMode(): void
     {
         $constraint = new ZipCode('FOO');
         $this->expectException(ConstraintDefinitionException::class);

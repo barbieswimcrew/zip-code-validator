@@ -7,13 +7,10 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
- * Class ZipCodeValidator
  * @author Martin Schindler
- * @package ZipCodeValidator\Constraints
  */
 class ZipCodeValidator extends ConstraintValidator
 {
-
     /**
      * ZipCode patterns from http://i18napis.appspot.com (updated: 2015-05-08)
      *
@@ -30,7 +27,7 @@ class ZipCodeValidator extends ConstraintValidator
      *  var_export($patterns);
      * </code>
      */
-    private $patterns = array(
+    private array $patterns = [
         'AC' => 'ASCN 1ZZ',
         'AD' => 'AD[1-7]0\\d',
         'AF' => '\\d{4}',
@@ -213,15 +210,15 @@ class ZipCodeValidator extends ConstraintValidator
         'YT' => '976\\d{2}',
         'ZA' => '\\d{4}',
         'ZM' => '\\d{5}',
-    );
+    ];
 
     /**
      * {@inheritdoc}
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ZipCode) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ZipCode');
+            throw new UnexpectedTypeException($constraint, ZipCode::class);
         }
 
         if (null === $value || '' === $value) {
@@ -249,9 +246,9 @@ class ZipCodeValidator extends ConstraintValidator
         if (!isset($this->patterns[$iso])) {
             if ($constraint->strict) {
                 throw new ConstraintDefinitionException(sprintf('Invalid iso code "%s" for validation', $iso));
-            } else {
-                return;
             }
+
+            return;
         }
 
         $pattern = $this->patterns[$iso];

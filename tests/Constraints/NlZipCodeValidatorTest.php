@@ -1,16 +1,19 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-class NlZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class NlZipCodeValidatorTest extends TestCase
 {
-    /** @var ZipCodeValidator */
-    protected $validator;
+    protected ZipCodeValidator $validator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new ZipCodeValidator;
     }
@@ -18,7 +21,7 @@ class NlZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testValidationOfNlZipWithIsoCode()
+    public function testValidationOfNlZipWithIsoCode(): void
     {
         $constraint = new ZipCode('NL');
 
@@ -30,7 +33,7 @@ class NlZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testValidationOfNlZipWithIsoCodeAnSmallCaps()
+    public function testValidationOfNlZipWithIsoCodeAnSmallCaps(): void
     {
 	    $constraint = new ZipCode([
                 'iso'                => 'NL',
@@ -42,7 +45,7 @@ class NlZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate('1000 aa', $constraint);
     }
 
-    public function testValidationErrorWithInvalidNlZipCode()
+    public function testValidationErrorWithInvalidNlZipCode(): void
     {
         $value = "1000";
         $constraint = new ZipCode('NL');
@@ -52,11 +55,11 @@ class NlZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ->getMock();
         $violationBuilderMock->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $contextMock->expects($this->exactly(1))
+        $contextMock->expects($this->once())
             ->method('buildViolation')
             ->with($constraint->message)
             ->willReturn($violationBuilderMock);

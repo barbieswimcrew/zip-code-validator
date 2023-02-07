@@ -1,17 +1,20 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class GbZipCodeValidatorTest extends TestCase
 {
-    /** @var ZipCodeValidator */
-    protected $validator;
+    protected ZipCodeValidator $validator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new ZipCodeValidator;
     }
@@ -19,11 +22,11 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider GbZipCodes
      */
-    public function testValidationOfGbZipCodeWithIso($zipCode)
+    public function testValidationOfGbZipCodeWithIso($zipCode): void
     {
         $constraint = new ZipCode('GB');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -41,7 +44,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider
      */
-    public function gbZipCodes()
+    public function gbZipCodes(): array
     {
         return [
             ['EC1A 1BB'],
@@ -60,16 +63,15 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider gbZipCodesSmallCaps
-     * @param $zipCode
      */
-    public function testValidationOfGbZipCodeWithIsoAndSmallCaps($zipCode)
+    public function testValidationOfGbZipCodeWithIsoAndSmallCaps(string $zipCode): void
     {
         $constraint = new ZipCode([
             'iso'                => 'GB',
             'caseSensitiveCheck' => false
         ]);
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -86,7 +88,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider
      */
-    public function gbZipCodesSmallCaps()
+    public function gbZipCodesSmallCaps(): array
     {
         return [
             ['ec1a 1bb'],
@@ -102,7 +104,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function testValidationErrorWithInvalidGbZipCode()
+    public function testValidationErrorWithInvalidGbZipCode(): void
     {
         $value = 'invalid';
         $constraint = new ZipCode('GB');
@@ -112,7 +114,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ->getMock();
         $violationBuilderMock->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -126,10 +128,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($value, $constraint);
     }
 
-    /**
-     * @test
-     */
-    public function testValidationErrorWithValidGbZipCodeWithExtraLeadingChars()
+    public function testValidationErrorWithValidGbZipCodeWithExtraLeadingChars(): void
     {
         $value = 'XEC1A 1BB';
         $constraint = new ZipCode('GB');
@@ -139,7 +138,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ->getMock();
         $violationBuilderMock->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -153,10 +152,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($value, $constraint);
     }
 
-    /**
-     * @test
-     */
-    public function testValidationErrorWithValidGbZipCodeWithExtraTrailingChars()
+    public function testValidationErrorWithValidGbZipCodeWithExtraTrailingChars(): void
     {
         $value = 'EC1A 1BBX';
         $constraint = new ZipCode('GB');
@@ -166,7 +162,7 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
             ->getMock();
         $violationBuilderMock->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -180,10 +176,10 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($value, $constraint);
     }
 
-    public function testEmptyIsoWithValidZipCodeWillCallGetterMethodOnObject()
+    public function testEmptyIsoWithValidZipCodeWillCallGetterMethodOnObject(): void
     {
         $value = 'EC1A 1BB';
-        /** @var ZipCode|PHPUnit_Framework_MockObject_MockObject $constraintMock */
+        /** @var ZipCode|MockObject $constraintMock */
         $constraintMock = $this->getMockBuilder(ZipCode::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -191,9 +187,9 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $constraintMock->iso = null;
         $constraintMock->getter = 'myValidationMethod';
 
-        $gbObject = new \Tests\Fixtures\IsoObject('GB');
+        $gbObject = new \ZipCodeValidator\Tests\Fixtures\IsoObject('GB');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -206,10 +202,10 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($value, $constraintMock);
     }
 
-    public function testConstraintDefinitionExceptionWhenCallableMethodNotExists()
+    public function testConstraintDefinitionExceptionWhenCallableMethodNotExists(): void
     {
         $value = 'EC1A 1BB';
-        /** @var ZipCode|PHPUnit_Framework_MockObject_MockObject $constraintMock */
+        /** @var ZipCode|MockObject $constraintMock */
         $constraintMock = $this->getMockBuilder(ZipCode::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -217,9 +213,9 @@ class GbZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
         $constraintMock->iso = null;
         $constraintMock->getter = 'myFooMethod'; // not existing in GbObject
 
-        $gbObject = new \Tests\Fixtures\IsoObject('GB');
+        $gbObject = new \ZipCodeValidator\Tests\Fixtures\IsoObject('GB');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();

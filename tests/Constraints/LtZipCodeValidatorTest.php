@@ -1,35 +1,31 @@
 <?php
 
+namespace ZipCodeValidator\Tests\Constraints;
+
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use ZipCodeValidator\Constraints\ZipCode;
 use ZipCodeValidator\Constraints\ZipCodeValidator;
 
-class LtZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
+class LtZipCodeValidatorTest extends TestCase
 {
+    protected ZipCodeValidator $validator;
 
-    /** @var ZipCodeValidator */
-    protected $validator;
-
-    /**
-     *
-     */
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new ZipCodeValidator;
     }
 
     /**
      * @dataProvider getValidLithuanianZipCodes
-     * @test
-     * @param string $zipCode
      */
-    public function testValidZipcodes($zipCode)
+    public function testValidZipcodes(string $zipCode): void
     {
         $constraint = new ZipCode('LT');
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -45,10 +41,8 @@ class LtZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * Valid Lithuanian postal codes are five-digit numbers, optionally prefixed with "LT-".
      * @see https://en.wikipedia.org/wiki/Postal_codes_in_Lithuania
-     *
-     * @return array
      */
-    public function getValidLithuanianZipCodes()
+    public function getValidLithuanianZipCodes(): array
     {
         return [
             ['12345'],
@@ -62,17 +56,15 @@ class LtZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getInvalidLithuanianZipCodes
-     * @test
-     * @param string $zipCode
      */
-    public function testInvalidZipcodes($zipCode)
+    public function testInvalidZipcodes(string $zipCode): void
     {
         $constraint = new ZipCode('LT');
 
         $violation = $this->createMock(ConstraintViolationBuilderInterface::class);
         $violation->expects($this->once())->method('setParameter')->willReturnSelf();
 
-        /** @var ExecutionContext|PHPUnit_Framework_MockObject_MockObject $contextMock */
+        /** @var ExecutionContext|MockObject $contextMock */
         $contextMock = $this->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -88,10 +80,8 @@ class LtZipCodeValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * Valid Lithuanian postal codes are five-digit numbers, optionally prefixed with "LT-".
      * @see https://en.wikipedia.org/wiki/Postal_codes_in_Lithuania
-     *
-     * @return array
      */
-    public function getInvalidLithuanianZipCodes()
+    public function getInvalidLithuanianZipCodes(): array
     {
         return [
             ['1234'],
