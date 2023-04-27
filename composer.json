@@ -15,7 +15,7 @@
         "symfony/validator": ">=4.4.40"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6 || ^10.1"
     },
     "autoload": {
         "psr-4": {

@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- https://phpunit.readthedocs.io/en/9.6/configuration.html -->
+<!-- https://docs.phpunit.de/en/10.1/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./tests</directory>
-    </include>
-  </coverage>
+         bootstrap="vendor/autoload.php" colors="true"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         cacheDirectory=".phpunit.cache">
+  <coverage/>
+
   <testsuites>
     <testsuite name="unit">
       <directory suffix=".php">./tests</directory>
     </testsuite>
   </testsuites>
+
+  <source>
+    <include>
+      <directory suffix=".php">./src/</directory>
+    </include>
+    <exclude>
+      <directory>./tests</directory>
+    </exclude>
+  </source>
 </phpunit>

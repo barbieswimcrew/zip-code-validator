@@ -40,7 +40,7 @@ class ChZipCodeValidatorTest extends TestCase
         $this->validator->validate($zipCode, $constraint);
     }
 
-    public function chValidZipCodes(): array
+    public static function chValidZipCodes(): array
     {
         return [
             ['1000'],
@@ -76,7 +76,7 @@ class ChZipCodeValidatorTest extends TestCase
         $this->validator->validate($zipcode, $constraint);
     }
 
-    public function chInvalidZipCodes(): array
+    public static function chInvalidZipCodes(): array
     {
         return [
             ['0000'],
