@@ -40,7 +40,7 @@ class EsZipCodeValidatorTest extends TestCase
         $this->validator->validate($zipCode, $constraint);
     }
 
-    public function esValidZipCodes(): array
+    public static function esValidZipCodes(): array
     {
         return [
             ['08020'],
@@ -76,7 +76,7 @@ class EsZipCodeValidatorTest extends TestCase
         $this->validator->validate($zipcode, $constraint);
     }
 
-    public function esInvalidZipCodes(): array
+    public static function esInvalidZipCodes(): array
     {
         return [
             ['53456'],

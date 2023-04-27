@@ -44,7 +44,7 @@ class GbZipCodeValidatorTest extends TestCase
     /**
      * @dataProvider
      */
-    public function gbZipCodes(): array
+    public static function gbZipCodes(): array
     {
         return [
             ['EC1A 1BB'],
@@ -88,7 +88,7 @@ class GbZipCodeValidatorTest extends TestCase
     /**
      * @dataProvider
      */
-    public function gbZipCodesSmallCaps(): array
+    public static function gbZipCodesSmallCaps(): array
     {
         return [
             ['ec1a 1bb'],

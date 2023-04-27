@@ -47,7 +47,7 @@ class JmZipCodeValidatorTest extends TestCase
      * used postal codes
      * from https://en.wikipedia.org/wiki/Postal_codes_in_Jamaica
      */
-    public function getValidJamaicaZipCodes(): array
+    public static function getValidJamaicaZipCodes(): array
     {
         return [
             ['KN'],
@@ -88,7 +88,7 @@ class JmZipCodeValidatorTest extends TestCase
      * used postal codes
      * from https://en.wikipedia.org/wiki/Postal_codes_in_Jamaica
      */
-    public function getInvalidJamaicaZipCodes(): array
+    public static function getInvalidJamaicaZipCodes(): array
     {
         return [
             ['12'],

@@ -42,7 +42,7 @@ class LtZipCodeValidatorTest extends TestCase
      * Valid Lithuanian postal codes are five-digit numbers, optionally prefixed with "LT-".
      * @see https://en.wikipedia.org/wiki/Postal_codes_in_Lithuania
      */
-    public function getValidLithuanianZipCodes(): array
+    public static function getValidLithuanianZipCodes(): array
     {
         return [
             ['12345'],
@@ -81,7 +81,7 @@ class LtZipCodeValidatorTest extends TestCase
      * Valid Lithuanian postal codes are five-digit numbers, optionally prefixed with "LT-".
      * @see https://en.wikipedia.org/wiki/Postal_codes_in_Lithuania
      */
-    public function getInvalidLithuanianZipCodes(): array
+    public static function getInvalidLithuanianZipCodes(): array
     {
         return [
             ['1234'],

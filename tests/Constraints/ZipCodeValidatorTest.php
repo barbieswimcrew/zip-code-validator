@@ -40,7 +40,7 @@ class ZipCodeValidatorTest extends TestCase
     /**
      * @dataProvider
      */
-    public function validZipCodes(): array
+    public static function validZipCodes(): array
     {
         return [
             ['HK', 999077],

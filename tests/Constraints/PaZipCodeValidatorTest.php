@@ -47,7 +47,7 @@ class PaZipCodeValidatorTest extends TestCase
      * used postal codes
      * from https://en.wikipedia.org/wiki/Postal_codes_in_Panama
      */
-    public function getPanamaZipCodes(): array
+    public static function getPanamaZipCodes(): array
     {
         return [
             ['0101'],
