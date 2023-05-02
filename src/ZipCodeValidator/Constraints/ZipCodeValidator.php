@@ -235,7 +235,7 @@ class ZipCodeValidator extends ConstraintValidator
                 throw new ConstraintDefinitionException(sprintf($message, $getter, get_class($object)));
             }
 
-            $iso = $object->$getter();
+            $iso = strtoupper($object->$getter() ?? '');
         }
 
         if(empty($iso)){
