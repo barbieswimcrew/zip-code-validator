@@ -26,7 +26,7 @@ For validating a zip code you need to instantiate a new ZipCode class provided b
 //...
 $form = $this->createFormBuilder($address)
     ->add('zipcode', TextType::class, [
-        'constraints' => array(
+        'constraints' => [
             new ZipCodeValidator\Constraints\ZipCode([
                 'iso' => 'DE'
             ])
