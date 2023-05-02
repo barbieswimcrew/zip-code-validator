@@ -31,7 +31,7 @@ $form = $this->createFormBuilder($address)
                 'iso' => 'DE'
             ])
         ]
-    ))
+    ])
     ->add('save', SubmitType::class, ['label' => 'Create Task'])
     ->getForm();
 ```
