@@ -21,24 +21,23 @@ $ composer require barbieswimcrew/zip-code-validator
 ## What now?
 For validating a zip code you need to instantiate a new ZipCode class provided by this package to set it as a constraint to your form field, for example:
 
-```bash
-
+```php
 <?php
 //...
 $form = $this->createFormBuilder($address)
-            ->add('zipcode', TextType::class, [
-                'constraints' => array(
-                    new ZipCodeValidator\Constraints\ZipCode([
-                        'iso' => 'DE'
-                    ])
-                ]
-            ))
-            ->add('save', SubmitType::class, ['label' => 'Create Task'])
-            ->getForm();
+    ->add('zipcode', TextType::class, [
+        'constraints' => array(
+            new ZipCodeValidator\Constraints\ZipCode([
+                'iso' => 'DE'
+            ])
+        ]
+    ))
+    ->add('save', SubmitType::class, ['label' => 'Create Task'])
+    ->getForm();
 ```
 
 Another way would be to use the constraint as an annotation of a class property, for example:
-```bash
+```php
 <?php
 
 use ZipCodeValidator\Constraints\ZipCode;
@@ -48,6 +47,19 @@ class Address
     /**
      * @ZipCode(iso="DE")
      */
+    protected $zipCode;
+}
+```
+
+You can also use it as a PHP8 Attribute, with parameters passed as an array of options, for example:
+```php
+<?php
+
+use ZipCodeValidator\Constraints\ZipCode;
+
+class Address
+{
+    #[ZipCode(['iso'=>'DE'])
     protected $zipCode;
 }
 ```
