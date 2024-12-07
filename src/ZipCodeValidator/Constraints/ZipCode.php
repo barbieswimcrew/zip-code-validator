@@ -20,7 +20,7 @@ class ZipCode extends Constraint
     public bool $strict = true;
     public bool $caseSensitiveCheck = true;
 
-    public function __construct(mixed $options = null, array $groups = null, mixed $payload = null)
+    public function __construct(mixed $options = null, array $groups = [], mixed $payload = null)
     {
         if (is_string($options)) {
             $options = array(
