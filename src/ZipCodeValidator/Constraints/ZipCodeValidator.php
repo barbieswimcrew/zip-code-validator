@@ -146,6 +146,7 @@ class ZipCodeValidator extends ConstraintValidator
         'MX' => '\\d{5}',
         'MY' => '\\d{5}',
         'MZ' => '\\d{4}',
+        'NA' => '\\d{2}0\d{2}',
         'NC' => '988\\d{2}',
         'NE' => '\\d{4}',
         'NF' => '2899',
