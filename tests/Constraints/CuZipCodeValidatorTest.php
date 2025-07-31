@@ -21,7 +21,7 @@ class CuZipCodeValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider chValidZipCodes
+     * @dataProvider cuValidZipCodes
      */
     public function testValidationOfCuZipCode(string $zipCode): void
     {
@@ -42,7 +42,7 @@ class CuZipCodeValidatorTest extends TestCase
         $this->validator->validate($zipCode, $constraint);
     }
 
-    public static function chValidZipCodes(): array
+    public static function cuValidZipCodes(): array
     {
         return [
             ['11300'],
