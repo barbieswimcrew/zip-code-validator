@@ -59,6 +59,7 @@ class ZipCodeValidator extends ConstraintValidator
         'CN' => '\\d{6}',
         'CO' => '\\d{6}',
         'CR' => '\\d{4,5}|\\d{3}-\\d{4}',
+        'CU' => '\\d{5}',
         'CV' => '\\d{4}',
         'CX' => '6798',
         'CY' => '\\d{4}',
