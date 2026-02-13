@@ -27,9 +27,7 @@ For validating a zip code you need to instantiate a new ZipCode class provided b
 $form = $this->createFormBuilder($address)
     ->add('zipcode', TextType::class, [
         'constraints' => [
-            new ZipCodeValidator\Constraints\ZipCode([
-                'iso' => 'DE'
-            ])
+            new ZipCodeValidator\Constraints\ZipCode(iso: 'DE')
         ]
     ])
     ->add('save', SubmitType::class, ['label' => 'Create Task'])
@@ -51,7 +49,7 @@ class Address
 }
 ```
 
-You can also use it as a PHP8 Attribute, with parameters passed as an array of options, for example:
+You can also use it as a PHP8 Attribute with named parameters:
 ```php
 <?php
 
@@ -59,9 +57,14 @@ use ZipCodeValidator\Constraints\ZipCode;
 
 class Address
 {
-    #[ZipCode(['iso'=>'DE'])
+    #[ZipCode(iso: 'DE')]
     protected $zipCode;
 }
+```
+
+Legacy array options are still supported for backward compatibility:
+```php
+#[ZipCode(['iso' => 'DE'])]
 ```
 
 >  Please consider to inject a valid ISO 3166 2-letter country code (e.g. DE, US, FR)!
@@ -117,10 +120,7 @@ protected $zipCode;
 ### Case insensitive zip code matching
 In case you want to match the zip code in a case insensitive way you have to pass a `caseSensitiveCheck` parameter with `false` value via the constructor:
 ```php
-$constraint = new ZipCode([
-    'iso' => 'GB', 
-    'caseSensitiveCheck' => false
-]);
+$constraint = new ZipCode(iso: 'GB', caseSensitiveCheck: false);
 
 ```
 By the default the library is using case sensitive zip code matching.
