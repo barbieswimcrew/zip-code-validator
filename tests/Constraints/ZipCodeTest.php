@@ -76,4 +76,10 @@ class ZipCodeTest extends TestCase
         $this->expectException(InvalidOptionsException::class);
         new ZipCode(['foo' => 'bar', 'iso' => 'FR']);
     }
+
+    public function testLegacyStringOptionCannotBeCombinedWithNamedIso(): void
+    {
+        $this->expectException(InvalidOptionsException::class);
+        new ZipCode('DE', iso: 'FR');
+    }
 }

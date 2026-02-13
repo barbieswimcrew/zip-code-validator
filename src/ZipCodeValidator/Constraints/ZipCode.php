@@ -33,6 +33,13 @@ class ZipCode extends Constraint
     )
     {
         if (is_string($options)) {
+            if (null !== $iso) {
+                throw new InvalidOptionsException(
+                    'Cannot pass both positional string $options and named "iso". Use one style.',
+                    ['options', 'iso']
+                );
+            }
+
             $options = ['iso' => $options];
         } elseif (null === $options) {
             $options = [];
