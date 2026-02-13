@@ -33,22 +33,11 @@ class ZipCode extends Constraint
     )
     {
         if (is_string($options)) {
-            $options = [
-                'iso' => $options,
-            ];
+            $options = ['iso' => $options];
         } elseif (null === $options) {
             $options = [];
         } elseif (!is_array($options)) {
             throw new InvalidOptionsException(sprintf('The options "%s" do not exist in constraint "%s".', 'options', __CLASS__), ['options']);
-        }
-
-        $availableOptions = ['iso', 'getter', 'strict', 'caseSensitiveCheck', 'message', 'groups', 'payload'];
-        $invalidOptions = array_values(array_filter(array_keys($options), fn ($option) => !in_array($option, $availableOptions, true)));
-        if ([] !== $invalidOptions) {
-            throw new InvalidOptionsException(
-                sprintf('The options "%s" do not exist in constraint "%s".', implode('", "', $invalidOptions), __CLASS__),
-                $invalidOptions
-            );
         }
 
         $resolvedOptions = [
@@ -61,6 +50,14 @@ class ZipCode extends Constraint
             'payload' => $payload,
         ];
 
+        $invalidOptions = array_values(array_filter(array_keys($options), fn ($option) => !in_array($option, array_keys($resolvedOptions), true)));
+        if ([] !== $invalidOptions) {
+            throw new InvalidOptionsException(
+                sprintf('The options "%s" do not exist in constraint "%s".', implode('", "', $invalidOptions), __CLASS__),
+                $invalidOptions
+            );
+        }
+
         foreach ($resolvedOptions as $option => $resolvedValue) {
             if (null !== $resolvedValue || !array_key_exists($option, $options)) {
                 continue;
@@ -69,37 +66,20 @@ class ZipCode extends Constraint
             $resolvedOptions[$option] = 'groups' === $option ? (array) $options[$option] : $options[$option];
         }
 
-        $iso = $resolvedOptions['iso'];
-        $getter = $resolvedOptions['getter'];
-        $strict = $resolvedOptions['strict'];
-        $caseSensitiveCheck = $resolvedOptions['caseSensitiveCheck'];
-        $message = $resolvedOptions['message'];
-
         parent::__construct(null, $resolvedOptions['groups'], $resolvedOptions['payload']);
 
-        if (null !== $iso) {
-            $this->iso = $iso;
-        }
+        unset($resolvedOptions['groups'], $resolvedOptions['payload']);
 
-        if (null !== $getter) {
-            $this->getter = $getter;
-        }
-
-        if (null !== $strict) {
-            $this->strict = $strict;
-        }
-
-        if (null !== $caseSensitiveCheck) {
-            $this->caseSensitiveCheck = $caseSensitiveCheck;
-        }
-
-        if (null !== $message) {
-            $this->message = $message;
+        foreach ($resolvedOptions as $option => $resolvedValue) {
+            if (null === $resolvedValue) {
+                continue;
+            }
+            
+            $this->{$option} = $resolvedValue;
         }
 
         if (null === $this->iso && null === $this->getter) {
             throw new MissingOptionsException(sprintf('Either the option "iso" or "getter" must be given for constraint %s', __CLASS__), ['iso', 'getter']);
         }
     }
-
 }
