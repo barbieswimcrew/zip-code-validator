@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ZipCodeValidator\Constraints;
 
 use Attribute;
@@ -30,9 +32,8 @@ class ZipCode extends Constraint
         ?bool $strict = null,
         ?bool $caseSensitiveCheck = null,
         ?string $message = null
-    )
-    {
-        if (is_string($options)) {
+    ) {
+        if (\is_string($options)) {
             if (null !== $iso) {
                 throw new InvalidOptionsException(
                     'Cannot pass both positional string $options and named "iso". Use one style.',
@@ -43,7 +44,7 @@ class ZipCode extends Constraint
             $options = ['iso' => $options];
         } elseif (null === $options) {
             $options = [];
-        } elseif (!is_array($options)) {
+        } elseif (!\is_array($options)) {
             throw new InvalidOptionsException(sprintf('The options "%s" do not exist in constraint "%s".', 'options', __CLASS__), ['options']);
         }
 
@@ -57,7 +58,7 @@ class ZipCode extends Constraint
             'payload' => $payload,
         ];
 
-        $invalidOptions = array_values(array_filter(array_keys($options), fn ($option) => !in_array($option, array_keys($resolvedOptions), true)));
+        $invalidOptions = array_values(array_filter(array_keys($options), fn ($option) => !\in_array($option, array_keys($resolvedOptions), true)));
         if ([] !== $invalidOptions) {
             throw new InvalidOptionsException(
                 sprintf('The options "%s" do not exist in constraint "%s".', implode('", "', $invalidOptions), __CLASS__),
@@ -66,7 +67,7 @@ class ZipCode extends Constraint
         }
 
         foreach ($resolvedOptions as $option => $resolvedValue) {
-            if (null !== $resolvedValue || !array_key_exists($option, $options)) {
+            if (null !== $resolvedValue || !\array_key_exists($option, $options)) {
                 continue;
             }
 
@@ -81,7 +82,7 @@ class ZipCode extends Constraint
             if (null === $resolvedValue) {
                 continue;
             }
-            
+
             $this->{$option} = $resolvedValue;
         }
 
