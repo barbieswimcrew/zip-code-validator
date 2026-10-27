@@ -92,7 +92,7 @@ class ZipCodeValidator extends ConstraintValidator
         'GT' => '\\d{5}',
         'GU' => '(969(?:[12]\\d|3[12]))(?:[ \\-](\\d{4}))?',
         'GW' => '\\d{4}',
-        'HK' => '999077', //Hong Kong
+        'HK' => '999077|0{3,6}|HKG|HK', //Hong Kong (no postal code system, placeholders accepted)
         'HM' => '\\d{4}',
         'HN' => '\\d{5}',
         'HR' => '\\d{5}',
